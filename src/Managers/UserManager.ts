@@ -1,4 +1,4 @@
-import type { Socket } from "socket.io"
+import { Socket } from "socket.io"
 import { RoomManager } from "./RoomManager"
 
 export interface User {
@@ -130,7 +130,7 @@ export class UserManager {
       this.roomManager.onAnswer(roomId, sdp, socket.id)
     })
 
-    socket.on("add-ice-candidate", ({ candidate, roomId, type }) => {
+    socket.on("add-ice-candidate", ({ candidate , roomId, type } : { candidate:any, roomId:string, type: "sender" | "receiver" }  ) => {
       console.log(`Received ICE candidate from ${socket.id} for room ${roomId} (${type})`)
       this.roomManager.onIceCandidates(roomId, socket.id, candidate, type)
     })
